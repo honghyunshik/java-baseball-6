@@ -1,4 +1,4 @@
-package baseball.common.Service;
+package baseball.common.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
@@ -8,13 +8,15 @@ import java.util.Map;
 
 public class RandomNumberService {
 
+
+
     private List<Integer> computer;
     private Map<String,String> cache;
+    private int count = 1;
 
     public RandomNumberService(){
         computer = createRandomNumber();
         cache = new LinkedHashMap<>();
-        System.out.println(computer);
     }
 
     //임의의 3자리 숫자 생성 로직
@@ -30,6 +32,7 @@ public class RandomNumberService {
         }
         return list;
     }
+
 
     //사용자 입력과 정답 비교
     public String isCorrect(String input){
@@ -53,7 +56,11 @@ public class RandomNumberService {
             StringBuilder sb = new StringBuilder();
             if(strike>0) sb.append(strike + "스트라이크 ");
             if(ball>0) sb.append(ball + "볼");
-            return sb.toString();
+
+            String answer = sb.toString();
+            //캐시에 저장
+            cache.put(input,answer);
+            return answer;
         }
 
         return null;
@@ -75,6 +82,8 @@ public class RandomNumberService {
             throw new IllegalArgumentException("정답은 숫자로 입력해야 합니다");
         }
 
+
+
         return true;
 
     }
@@ -83,6 +92,12 @@ public class RandomNumberService {
     public List<Integer> getComputer(){
         return computer;
     }
+
+    //도전 숫자 캡슐화
+    public int getCount(){
+        return count++;
+    }
+
 
 
 }
