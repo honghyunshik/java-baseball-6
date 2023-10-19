@@ -8,7 +8,7 @@ public class RandomNumberService {
 
     private List<Integer> computer;
 
-    RandomNumberService(){
+    public RandomNumberService(){
         computer = createRandomNumber();
     }
 
@@ -24,6 +24,26 @@ public class RandomNumberService {
             }
         }
         return list;
+    }
+
+    //사용자 입력 유효성 검사
+    public boolean isValid(String number){
+
+        //사용자 입력에는 0이 포함되어서는 안된다
+        if(number.contains("0")) throw new IllegalArgumentException("정답에는 0이 포함될 수 없습니다");
+
+        //사용자 입력은 3자리여야 한다
+        if(number.length()!=3) throw new IllegalArgumentException("정답은 3자리 숫자입니다");
+
+        //사용자 입력은 숫자이어야 한다
+        try{
+            int numberToInt = Integer.parseInt(number);
+        }catch(Exception e){
+            throw new IllegalArgumentException("정답은 숫자로 입력해야 합니다");
+        }
+
+        return true;
+
     }
 
     //정답 캡슐화
