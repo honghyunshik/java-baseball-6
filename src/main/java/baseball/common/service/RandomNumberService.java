@@ -33,15 +33,7 @@ public class RandomNumberService {
         }
     }
 
-    //캐시를 우선적으로 확인하기
-    private String findCorrectInCache(String input){
-        return cache.get(input);
-    }
 
-    //응답을 캐시에 저장하기
-    private void putInputInCache(String input, String answer){
-        if(!cache.containsKey(input)) cache.put(input,answer);
-    }
 
     //사용자 입력과 정답 비교
     public String isCorrect(String input){
@@ -100,7 +92,7 @@ public class RandomNumberService {
             throw new IllegalArgumentException("정답은 숫자로 입력해야 합니다");
         }
 
-        //사용자가 중복된 숫자를 입력할 경우
+        //사용자가 중복된 숫자를 입력하면 안된다
         HashSet<Character> characterHashSet = new HashSet<>();
         for(int index=0;index<NUMBER_LENGTH;index++){
             if(characterHashSet.contains(number.charAt(index))){
@@ -111,6 +103,16 @@ public class RandomNumberService {
 
         return true;
 
+    }
+
+    //캐시를 우선적으로 확인하기
+    private String findCorrectInCache(String input){
+        return cache.get(input);
+    }
+
+    //응답을 캐시에 저장하기
+    private void putInputInCache(String input, String answer){
+        if(!cache.containsKey(input)) cache.put(input,answer);
     }
 
 
