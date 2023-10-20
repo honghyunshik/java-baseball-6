@@ -18,14 +18,14 @@ public class CommonController {
         while(true){
 
             System.out.println("숫자 야구 게임을 시작합니다.");
-
+            randomNumberService.createRandomNumber();
             while(true){
 
                 System.out.print(randomNumberService.getCount() + "번째 시도입니다! 숫자를 입력해주세요 : ");
                 String answer = randomNumberService.isCorrect(Console.readLine());
                 System.out.println(answer);
                 //3 스트라이크일 경우 break
-                if(answer.equals("3스트라이크 ")){
+                if(answer.equals("3스트라이크")){
                     System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
                     break;
                 }

@@ -13,22 +13,19 @@ public class RandomNumberService {
     private int count = 1;
 
     public RandomNumberService(){
-        computer = createRandomNumber();
         cache = new LinkedHashMap<>();
     }
 
     //임의의 3자리 숫자 생성 로직
-    private ArrayList<Integer> createRandomNumber(){
+    public void createRandomNumber(){
 
-        ArrayList<Integer> list = new ArrayList<>();
-
-        while(list.size()<3){
+        computer = new ArrayList<>();
+        while(computer.size()<3){
             int randomNumber = Randoms.pickNumberInRange(1,9);
-            if(!list.contains(randomNumber)){
-                list.add(randomNumber);
+            if(!computer.contains(randomNumber)){
+                computer.add(randomNumber);
             }
         }
-        return list;
     }
 
 
@@ -52,12 +49,15 @@ public class RandomNumberService {
             }
             if(strike==0&&ball==0) return "낫싱";
             StringBuilder sb = new StringBuilder();
-            if(strike>0) sb.append(strike + "스트라이크 ");
-            if(ball>0) sb.append(ball + "볼");
+            if(ball>0) sb.append(ball + "볼 ");
+            if(strike>0) sb.append(strike + "스트라이크");
+
 
             String answer = sb.toString();
             //캐시에 저장
             cache.put(input,answer);
+            //정답 맞추면 count 초기화
+            if(strike==3) count=1;
             return answer;
         }
 
