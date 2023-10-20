@@ -1,8 +1,11 @@
 package baseball.common.controller;
 
+import baseball.beginner.controller.BeginnerController;
 import baseball.beginner.service.BeginnerService;
 import baseball.common.service.CommonNumberService;
+import baseball.hard.controller.HardController;
 import baseball.hard.service.HardService;
+import baseball.normal.controller.NormalController;
 import baseball.normal.service.NormalService;
 import camp.nextstep.edu.missionutils.Console;
 
@@ -12,8 +15,12 @@ public class CommonController {
 
     private HashMap<Integer,String> modeMap;
     private BeginnerService beginnerService;
+    private BeginnerController beginnerController;
     private NormalService normalService;
+    private NormalController normalController;
     private HardService hardService;
+    private HardController hardController;
+
 
 
     public CommonController(){
@@ -57,15 +64,21 @@ public class CommonController {
 
         if(mode==1) {
             //singleton 패턴
-            if(beginnerService==null) beginnerService = new BeginnerService();
+            if(beginnerService==null) {
+                beginnerService = new BeginnerService();
+                beginnerController = new BeginnerController();
+            }
             //정답 생성
             beginnerService.createRandomNumber();
-            beginnerModeInGameInRecursion();
+            beginnerController.beginnerModeInGameInRecursion(beginnerService);
         }
         else if(mode==2) {
-            if(normalService==null) normalService = new NormalService();
+            if(normalService==null) {
+                normalService = new NormalService();
+                normalController = new NormalController();
+            }
             normalService.createRandomNumber();
-            normalModeInGameInRecursion();
+            normalController.normalModeInGameInRecursion(normalService);
         }
         else{
             if(hardService==null) hardService = new HardService();
@@ -91,39 +104,14 @@ public class CommonController {
 
     }
 
-    //초보 모드 인게임 재귀 함수
-    private void beginnerModeInGameInRecursion(){
-
-        if(yesNoInReqursion().equals("y")) {
-            System.out.println((beginnerService.getHintCount() + 1) + "번째 숫자는" +
-                    beginnerService.hintWithPossibleNumber() + "입니다!");
-            beginnerService.plusHintCount();
-        }
-
-        beforeInGame(beginnerService);
-        if(!afterInGame(beginnerService)) beginnerModeInGameInRecursion();
-
-        //힌트 카운트 초기화
-        beginnerService.resetHintCount();
-        return;
-    }
-
-    //노말 모드 인게임 재귀 함수
-    private void normalModeInGameInRecursion(){
-
-        beforeInGame(normalService);
-        if(!afterInGame(normalService)) normalModeInGameInRecursion();
-
-        return;
-    }
 
     //인게임 before
-    private void beforeInGame(CommonNumberService commonNumberService){
+    public void beforeInGame(CommonNumberService commonNumberService){
         System.out.print(commonNumberService.getCount() + "번째 시도입니다! 숫자를 입력해주세요 : ");
     }
 
     //인게임 after
-    private boolean afterInGame(CommonNumberService commonNumberService){
+    public boolean afterInGame(CommonNumberService commonNumberService){
         String answer = commonNumberService.isCorrect(Console.readLine());
         System.out.println(answer);
         //3 스트라이크일 경우 break
@@ -152,21 +140,7 @@ public class CommonController {
         return Integer.parseInt(input);
     }
 
-    //yes no 재귀함수
-    private String yesNoInReqursion(){
 
-        //
-        if(beginnerService.getHintCount()==beginnerService.getNumberLength()){
-            System.out.println("더 이상의 힌트를 받으실 수 없습니다!");
-            return "n";
-        }
-        System.out.println((beginnerService.getHintCount()+1) + "번째 힌트를 제공해드릴까요?" +
-                "\ny:n으로 대답해주세요!");
-        String input = Console.readLine();
-
-        if(!input.equals("y")&&!input.equals("n")) return yesNoInReqursion();
-        return input;
-    }
 
     //모드 해시맵 초기 설정
     private void modeMapInit(){
