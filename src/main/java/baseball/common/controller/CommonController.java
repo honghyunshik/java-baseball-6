@@ -10,6 +10,7 @@ public class CommonController {
     public RandomNumberService randomNumberService;
     private HashMap<Integer,String> modeMap;
 
+
     public CommonController(RandomNumberService randomNumberService){
         this.randomNumberService = randomNumberService;
         modeMapInit();  //모드맵 초기설정
@@ -28,13 +29,24 @@ public class CommonController {
         baseballInGame(mode);
 
         //종료 or 재시작
-
+        //1이면 재시작, 2면 종료
+        if(baseballEnd()==1) baseball();
     }
 
     //야구 시작 -> 정답 생성
     private void baseballStart(){
         System.out.println("숫자 야구 게임을 시작합니다.");
         randomNumberService.createRandomNumber();   //정답 생성
+    }
+
+    //야구 종료 -> 재시작 or 종료
+    private int baseballEnd(){
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+        String input = Console.readLine();
+        //1,2번이 입력될 때까지 재귀
+        if(!input.equals("1")&&!input.equals("2")) return baseballEnd();
+
+        return Integer.parseInt(input);
     }
 
     //모드 별 야구 진행
