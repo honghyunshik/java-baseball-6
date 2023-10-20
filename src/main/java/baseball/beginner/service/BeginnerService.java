@@ -1,23 +1,27 @@
 package baseball.beginner.service;
 
-import baseball.common.service.RandomNumberService;
+import baseball.common.service.CommonNumberService;
 
 
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+public class BeginnerService extends CommonNumberService {
 
-public class BeginnerService extends RandomNumberService {
-
-    private int count = 0;
+    private int hintCount = 0;
 
     //정답 1개 제공하기
     public Integer hintWithPossibleNumber(){
-        return super.getComputer().get(count++);
+        return super.getComputer().get(hintCount);
     }
 
-    public int getCount(){
-        return count;
+    public int getHintCount(){
+        return hintCount;
+    }
+
+    public void plusHintCount(){
+        hintCount++;
+    }
+
+    public void resetHintCount(){
+        hintCount = 0;
     }
 
 

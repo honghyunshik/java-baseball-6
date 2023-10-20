@@ -4,7 +4,7 @@ import camp.nextstep.edu.missionutils.Randoms;
 
 import java.util.*;
 
-public class RandomNumberService {
+public class CommonNumberService {
 
     private static final int NUMBER_LENGTH = 3;
 
@@ -12,17 +12,19 @@ public class RandomNumberService {
     private Map<String,String> cache;
     private int count = 1;
 
-    public RandomNumberService(){
-        cache = new LinkedHashMap<>();
+
+    public CommonNumberService(){
         computer = new ArrayList<>();
+        cache = new HashMap<>();
     }
+
 
     //임의의 3자리 숫자 생성 로직
     public void createRandomNumber(){
 
         //정답 초기화
         computer.clear();
-        //캐시 초기화
+        //캐시 최기화
         cache.clear();
 
         while(computer.size()<NUMBER_LENGTH){
@@ -33,7 +35,6 @@ public class RandomNumberService {
         }
 
     }
-
 
 
     //사용자 입력과 정답 비교
@@ -106,6 +107,7 @@ public class RandomNumberService {
 
     }
 
+
     //캐시를 우선적으로 확인하기
     private String findCorrectInCache(String input){
         return cache.get(input);
@@ -116,7 +118,6 @@ public class RandomNumberService {
         if(!cache.containsKey(input)) cache.put(input,answer);
     }
 
-
     //도전 숫자 캡슐화
     public int getCount(){
         return count++;
@@ -124,6 +125,9 @@ public class RandomNumberService {
 
     //정답 캡슐화
     public List<Integer> getComputer(){return computer;}
+
+    //정답 길이 캡슐화
+    public int getNumberLength(){return NUMBER_LENGTH;}
 
 
 }
