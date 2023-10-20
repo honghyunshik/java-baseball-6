@@ -12,13 +12,15 @@ public class CommonController {
         this.randomNumberService = randomNumberService;
     }
 
-
     public void baseball(){
 
+        //종료될 때까지 반복
         while(true){
 
             System.out.println("숫자 야구 게임을 시작합니다.");
-            randomNumberService.createRandomNumber();
+            randomNumberService.createRandomNumber();   //정답 생성
+
+            //정답 맞출때까지 반복
             while(true){
 
                 System.out.print(randomNumberService.getCount() + "번째 시도입니다! 숫자를 입력해주세요 : ");
@@ -33,6 +35,7 @@ public class CommonController {
 
             System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요");
 
+            //1과 2중에서 입력할 때까지 반복
             while(true){
                 String input = Console.readLine();
                 //1 입력 시 재시작

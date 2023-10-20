@@ -14,13 +14,18 @@ public class RandomNumberService {
 
     public RandomNumberService(){
         cache = new LinkedHashMap<>();
+        computer = new ArrayList<>();
     }
 
     //임의의 3자리 숫자 생성 로직
     public void createRandomNumber(){
 
-        computer = new ArrayList<>();
-        while(computer.size()<3){
+        //정답 초기화
+        computer.clear();
+        //캐시 초기화
+        cache.clear();
+
+        while(computer.size()<NUMBER_LENGTH){
             int randomNumber = Randoms.pickNumberInRange(1,9);
             if(!computer.contains(randomNumber)){
                 computer.add(randomNumber);
@@ -28,6 +33,15 @@ public class RandomNumberService {
         }
     }
 
+    //캐시를 우선적으로 확인하기
+    private String findCorrectInCache(String input){
+        return cache.get(input);
+    }
+
+    //응답을 캐시에 저장하기
+    private void putInputInCache(String input, String answer){
+        if(!cache.containsKey(input)) cache.put(input,answer);
+    }
 
     //사용자 입력과 정답 비교
     public String isCorrect(String input){
@@ -36,7 +50,8 @@ public class RandomNumberService {
         int ball = 0;
 
         //물어본 적이 있는 질문이라면 캐시에서 반환
-        if(cache.containsKey(input)) return cache.get(input);
+        String cacheValue = findCorrectInCache(input);
+        if(cacheValue!=null) return findCorrectInCache(input);
 
         //유효한 입력에 대해서만 결과 반환
         if(isValid(input)){
@@ -54,8 +69,10 @@ public class RandomNumberService {
 
 
             String answer = sb.toString();
+
             //캐시에 저장
-            cache.put(input,answer);
+            putInputInCache(input,answer);
+
             //정답 맞추면 count 초기화
             if(strike==3) count=1;
             return answer;
@@ -66,6 +83,9 @@ public class RandomNumberService {
 
     //사용자 입력 유효성 검사
     private boolean isValid(String number){
+
+        //캐시에 존재한다면 유효하다
+        if(cache.containsKey(number)) return true;
 
         //사용자 입력에는 0이 포함되어서는 안된다
         if(number.contains("0")) throw new IllegalArgumentException("정답에는 0이 포함될 수 없습니다");
@@ -93,10 +113,6 @@ public class RandomNumberService {
 
     }
 
-    //정답 캡슐화
-    public List<Integer> getComputer(){
-        return computer;
-    }
 
     //도전 숫자 캡슐화
     public int getCount(){
