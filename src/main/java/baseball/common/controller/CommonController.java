@@ -52,8 +52,15 @@ public class CommonController {
     //모드 별 야구 진행
     private void baseballInGame(int mode){
 
+        if(mode==1) BeginnerModeInGameInRecursion();
         if(mode==2) NormalModeInGameInRecursion();
 
+    }
+
+    //초보 모드 인게임 재귀 함수
+    private void BeginnerModeInGameInRecursion(){
+        beforeInGame();
+        System.out.println();
     }
 
     //노말 모드 인게임 재귀 함수

@@ -31,6 +31,7 @@ public class RandomNumberService {
                 computer.add(randomNumber);
             }
         }
+
     }
 
 
@@ -121,6 +122,8 @@ public class RandomNumberService {
         return count++;
     }
 
+    //정답 캡슐화
+    public List<Integer> getComputer(){return computer;}
 
 
 }
