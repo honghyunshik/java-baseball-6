@@ -81,33 +81,20 @@ public class CommonController {
             normalController.normalModeInGameInRecursion(normalService);
         }
         else{
-            if(hardService==null) hardService = new HardService();
+            if(hardService==null) {
+                hardService = new HardService();
+                hardController = new HardController();
+            }
             hardService.createRandomNumber();
-
+            hardController.hardModeInGameRecursion(hardService);
         }
 
-
     }
-
-    //하드 모드 인게임 재귀 함수
-    private void hardModeInGameRecursion(){
-
-        //카운트 오버 시 실패
-        if(hardService.isCountOver(hardService.getCount())){
-            System.out.println("남은 기회를 모두 소진하셨습니다! 게임 종료");
-            return;
-        }
-
-        System.out.println("하드모드에는 2가지 규칙이 추가 적용됩니다!\n" +
-                "1. " + hardService.getCountLimit() + "번 이내에 정답을 맞춰야 합니다! 현재 " +
-                (hardService.getCountLimit()-hardService.getCount()) + "번의 기회가 남아있습니다!");
-
-    }
-
 
     //인게임 before
     public void beforeInGame(CommonNumberService commonNumberService){
         System.out.print(commonNumberService.getCount() + "번째 시도입니다! 숫자를 입력해주세요 : ");
+        commonNumberService.plusCount();
     }
 
     //인게임 after

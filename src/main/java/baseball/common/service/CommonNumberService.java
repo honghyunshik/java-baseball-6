@@ -120,7 +120,17 @@ public class CommonNumberService {
 
     //도전 숫자 캡슐화
     public int getCount(){
-        return count++;
+        return count;
+    }
+
+    //카운트 추가
+    public void plusCount(){
+        count++;
+    }
+
+    //카운트 리셋
+    public void resetCount(){
+        count = 1;
     }
 
     //정답 캡슐화
