@@ -10,6 +10,7 @@ import baseball.normal.service.NormalService;
 import camp.nextstep.edu.missionutils.Console;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeoutException;
 
 public class CommonController {
 
@@ -28,7 +29,7 @@ public class CommonController {
     }
 
     //야구 시작 -> 모드 설정 -> 모드별 야구 진행 -> 종료 or 재시작
-    public void baseball(){
+    public void baseball() throws TimeoutException {
 
         //야구 시작
         baseballStart();
@@ -60,7 +61,7 @@ public class CommonController {
     }
 
     //모드 별 야구 진행
-    private void baseballInGame(int mode){
+    private void baseballInGame(int mode) throws TimeoutException {
 
         if(mode==1) {
             //singleton 패턴
